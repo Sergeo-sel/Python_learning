@@ -9,12 +9,13 @@
 # Mary, 87
 # Josh, 64
 
+from unittest.util import sorted_list_difference
 import numpy
 import csv
 
 def save_data_to_file(data: list, filename: str) -> bool:
     try:
-        with open(filename, 'w') as file:
+        with open(filename, 'w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=csv_columns)
             writer.writeheader()
             for row in data:
@@ -77,23 +78,16 @@ def find_highest_score(games_result: list) -> list:
 
     return highest_result_list
 
-def save_data_to_file(data: list, filename: str) -> bool:
-    try:
-        with open(filename, 'w') as file:
-            writer = csv.DictWriter(file, fieldnames=csv_columns)
-            writer.writeheader()
-            for row in data:
-                writer.writerow(row)
-            return True
-    except IOError:
-        print('I/O error')
-        return False
-    
-    
+def sort_highest_result(highest_result_list: list) -> list:
+    sorted_highest_result_list = sorted(highest_result_list, key=lambda d: d['Score'], reverse=True) 
+
+    return sorted_highest_result_list
 
 
 results = get_file_data('players_score.csv')
 
 highest_result_list = find_highest_score(results)
 
-save_data_to_file(highest_result_list, 'high_scores.csv')
+sorted_highest_result = sort_highest_result(highest_result_list)
+
+save_data_to_file(sorted_highest_result, 'high_scores.csv')
