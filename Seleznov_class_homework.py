@@ -90,11 +90,3 @@ class Robot:
                 It's possible to choose only: Up, Down,
                 Right of Left position"""
                 )
-
-
-
-
-robot1 = Robot('down', 2, 2)
-print(robot1)
-
-print(robot1.display_position())
