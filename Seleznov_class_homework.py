@@ -27,8 +27,20 @@ print(result)
 # u = Vector(5, 2)
 #  v * u == 11
 
-result2 = (v.x.__mul__(u.x)).__add__(v.y.__mul__(u.y))
-print(result2)
+
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def cross_product(self, other):
+        return (v.x.__mul__(u.x)).__add__(v.y.__mul__(u.y))
+
+
+v = Vector(1, 3)
+u = Vector(5, 2)
+result = v.cross_product(u)
+print(result)
 
 
 # Create a Robot class with the following attributes: orientation, position_x, position_y. The Robot class should have the following methods: 
@@ -71,12 +83,11 @@ class Robot:
             return
 
         if self.orientation == 'left':
-            self.position_x += steps_count
+            self.position_x -= steps_count
             return
 
     def turn(self, orientation):
         self.validate_orientation(orientation)
-
         return self.orientation == orientation
 
     def display_position(self) -> str:
