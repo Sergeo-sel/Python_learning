@@ -7,7 +7,7 @@
 from tkinter.font import ROMAN
 
 
-class Vector:
+class Old_vector:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -16,10 +16,6 @@ class Vector:
         return self.x * other.x + self.y * other.y
 
 
-v = Vector(1, 3)
-u = Vector(5, 2)
-result = v.cross_product(u)
-print(result)
 
 
 # 2. Implement the previous method with the magic method
@@ -33,14 +29,12 @@ class Vector:
         self.x = x
         self.y = y
 
-    def cross_product(self, other):
-        return (v.x.__mul__(u.x)).__add__(v.y.__mul__(u.y))
+    def __mul__(self, other):
+        return self.x * other.x + self.y * other.y
+    
+    def __str__(self):
+        return f'{self.x}, {self.y}'
 
-
-v = Vector(1, 3)
-u = Vector(5, 2)
-result = v.cross_product(u)
-print(result)
 
 
 # Create a Robot class with the following attributes: orientation, position_x, position_y. The Robot class should have the following methods: 
@@ -51,17 +45,15 @@ print(result)
 class Robot:
     def __init__(self, orientation: str, position_x: int, position_y: int):
         try:
-            position_x = int(position_x)
-            position_y = int(position_y)
+            self.position_x = int(position_x)
+            self.position_y = int(position_y)
         except ValueError:
             print('That was wrong position value. Please use an int')
             return
 
         self.validate_orientation(orientation)
 
-        self.orientation = orientation
-        self.position_x = position_x
-        self.position_y = position_y
+        self.orientation = orientation.lower()
 
     def move(self, steps_count: int):
         try:
@@ -88,7 +80,7 @@ class Robot:
 
     def turn(self, orientation):
         self.validate_orientation(orientation)
-        return self.orientation == orientation
+        self.orientation = orientation
 
     def display_position(self) -> str:
         return f'Position is ({self.position_x}, {self.position_y}), ' + \
@@ -101,3 +93,22 @@ class Robot:
                 It's possible to choose only: Up, Down,
                 Right of Left position"""
                 )
+
+
+if __name__ == '__main__':
+    v = Old_vector(1, 3)
+    u = Old_vector(5, 2)
+    result = v.cross_product(u)
+    print(result)
+
+    v = Vector(1, 3)
+    u = Vector(5, 2)
+    result = v * u
+    print(result)
+
+    my_robot = Robot('Up', 2, 3,)
+    my_position = my_robot.display_position()
+    print(my_position)
+    my_robot.turn('down')
+    new_position = my_robot.display_position()
+    print(new_position)
